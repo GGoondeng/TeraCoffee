@@ -1,5 +1,6 @@
 package com.teracoffee.order.service;
 
+import com.teracoffee.event.outbox.service.OrderEventService;
 import com.teracoffee.menu.entity.Menu;
 import com.teracoffee.menu.repository.MenuRepository;
 import com.teracoffee.order.dto.CreateOrderRequest;
@@ -22,6 +23,7 @@ public class OrderService {
     private final PointWalletRepository pointWalletRepository;
     private final PointHistoryRepository pointHistoryRepository;
     private final OrderRepository orderRepository;
+    private final OrderEventService orderEventService;
 
     @Transactional
     public CreateOrderResponse createOrder(CreateOrderRequest request) {
@@ -35,6 +37,7 @@ public class OrderService {
         pointHistoryRepository.save(PointHistory.use(wallet.getUserId(), menu.getPrice(), wallet.getBalance()));
 
         Order order = orderRepository.save(Order.paid(request.userId(), menu));
+        orderEventService.saveAndSendAfterCommit(order);
 
         return CreateOrderResponse.from(order);
     }

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "coffee_menu")
+@Table(name = "menus")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CoffeeMenu {
+public class Menu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class CoffeeMenu {
     @Column(nullable = false)
     private boolean active;
 
-    public CoffeeMenu(String name, int price) {
+    public Menu(String name, int price) {
         this.name = name;
         this.price = price;
         this.active = true;

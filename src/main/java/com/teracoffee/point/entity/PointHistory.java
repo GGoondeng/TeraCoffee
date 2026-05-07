@@ -48,4 +48,8 @@ public class PointHistory {
     void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public static PointHistory use(String userId, long amount, long balanceAfter) {
+        return new PointHistory(userId, PointHistoryType.USE, amount, balanceAfter);
+    }
 }

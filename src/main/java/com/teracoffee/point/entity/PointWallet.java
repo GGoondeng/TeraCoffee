@@ -38,4 +38,16 @@ public class PointWallet {
 
         this.balance += amount;
     }
+
+    public void use(long amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("사용 금액은 1 이상이어야 합니다.");
+        }
+
+        if (this.balance < amount) {
+            throw new IllegalStateException("포인트 잔액이 부족합니다.");
+        }
+
+        this.balance -= amount;
+    }
 }
